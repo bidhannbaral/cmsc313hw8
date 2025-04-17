@@ -10,6 +10,11 @@ class Matrix {
     int m_rows, m_columns;
 
     Matrix(int rows, int columns) {
+
+        if (rows <= 0 || columns <= 0) {
+            throw invalid_argument("Matrix dimensions must be positive");
+        }
+
         m_rows = rows;
         m_columns = columns;
         m_matrix = new int*[m_rows];
@@ -35,6 +40,10 @@ class Matrix {
     }
 
     Matrix add(Matrix other) {
+        if (m_rows != other.m_rows || m_columns != other.m_columns) {
+            throw invalid_argument("Matrix sizes don't match for addition");
+        }
+
         Matrix result(m_rows, m_columns);
         for (int i = 0; i < m_rows; i++)
             for (int j = 0; j < m_columns; j++)
@@ -59,6 +68,11 @@ class Matrix {
     }
 
     Matrix matrixMultiply(Matrix other) {
+
+        if (m_columns != other.m_rows) {
+            throw invalid_argument("Matrix multiplication requires the first matrix's columns to equal the second matrix's rows");
+        }
+
         Matrix result(m_rows, other.m_columns);
         for (int i = 0; i < m_rows; i++)
             for (int j = 0; j < other.m_columns; j++)

@@ -3,7 +3,7 @@ Author:
 
 PURPOSE OF SOFTWARE:
     This software takes 3 matricies A, B, and C and creates a new matrix D by doing the operation: D = A + (3 * B) * C^(transpose). This will help me learn
-    how to code in C.
+    how to code in C. Also, the operations don't have to be in that exact order. 
 
 FILES:
     matrix.cpp: This is the file with the code for the assignment. This file contains C++ code takes 3 matricies A, B, and C and creates a new matrix D
@@ -12,13 +12,13 @@ FILES:
                 functionality. It takes 3 matricies A, B, and C and creates a new matrix D by doing the operation: D = A + (3 * B) * C^(transpose).
 
 BUILD INSTRUCTIONS:
-    matrix.cpp: g++ -Wall matrix.cpp -o CPPmatrix
-    matrix.c: gcc -Wall matrix.c -o Cmatrix or g++ -Wall matrix.c -o Cmatrix
+    matrix.cpp: g++ -m32 -O0 matrix.cpp -o CPPmatrix
+    matrix.c: gcc -std=c99 -m32 -O0 matrix.c -o Cmatrix
 
 TESTING METHODOLOGY:
-    matrix.cpp: in the terminal after building run ./CPPmatrix 
-    matrix.c: in the terminal after building run ./Cmatrix
+    matrix.cpp: In the terminal compile matrix.cpp and run it.
+    matrix.c: In the terminal compile matrix.c and run it.
 
 ADDITIONAL INFORMATION:
-    I have provided an image that shows how I built and tested the program named "build-test.png".
-    I have also provided the .exe files after I compiled the programs(Cmatrix.exe and CPPmatrix.exe). 
+    You can change the values and dimensions of the matrix in the main function. 
+    Also, you can also change the operations that you want the code to run in the main function.

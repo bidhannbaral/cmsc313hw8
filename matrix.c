@@ -8,7 +8,15 @@ typedef struct {
 } Matrix;
 
 Matrix createMatrix(int rows, int columns) {
+    
     Matrix one;
+    if (rows <= 0 || columns <= 0) {
+        fprintf(stderr, "Matrix dimensions must be positive\n");
+        one.m_rows = one.m_columns = 0;
+        one.m_matrix = NULL;
+        return one;
+    }
+
     one.m_rows = rows;
     one.m_columns = columns;
     one.m_matrix = (int**)malloc(rows * sizeof(int*));
@@ -21,12 +29,20 @@ Matrix createMatrix(int rows, int columns) {
 }
 
 void freeMatrix(Matrix* one) {
+
+    if (one->m_matrix == NULL) {
+        return;
+    }
+
     for (int i = 0; i < one->m_rows; i++)
         free(one->m_matrix[i]);
     free(one->m_matrix);
+    one->m_matrix = NULL;
+    one->m_rows = one->m_columns = 0;
 }
 
 void printMatrix(Matrix one) {
+
     for (int i = 0; i < one.m_rows; i++) {
         for (int j = 0; j < one.m_columns; j++)
             printf("%d ", one.m_matrix[i][j]);
@@ -35,6 +51,12 @@ void printMatrix(Matrix one) {
 }
 
 Matrix add(Matrix one, Matrix two) {
+
+    if (one.m_rows != two.m_rows || one.m_columns != two.m_columns) {
+        fprintf(stderr, "Matrix sizes don't match for addition\n");
+        return createMatrix(0, 0);
+    }
+
     Matrix result = createMatrix(one.m_rows, one.m_columns);
     for (int i = 0; i < one.m_rows; i++)
         for (int j = 0; j < one.m_columns; j++)
@@ -43,6 +65,7 @@ Matrix add(Matrix one, Matrix two) {
 }
 
 Matrix scalarMultiply(Matrix one, int num) {
+
     Matrix result = createMatrix(one.m_rows, one.m_columns);
     for (int i = 0; i < one.m_rows; i++)
         for (int j = 0; j < one.m_columns; j++)
@@ -51,6 +74,7 @@ Matrix scalarMultiply(Matrix one, int num) {
 }
 
 Matrix transpose(Matrix one) {
+
     Matrix result = createMatrix(one.m_columns, one.m_rows);
     for (int i = 0; i < one.m_rows; i++)
         for (int j = 0; j < one.m_columns; j++)
@@ -59,6 +83,12 @@ Matrix transpose(Matrix one) {
 }
 
 Matrix matrixMultiply(Matrix one, Matrix two) {
+
+    if (one.m_columns != two.m_rows) {
+        fprintf(stderr, "Matrix multiplication requires the first matrix's columns to equal the second matrix's rows\n");
+        return createMatrix(0, 0);
+    }
+
     Matrix result = createMatrix(one.m_rows, two.m_columns);
     for (int i = 0; i < one.m_rows; i++)
         for (int j = 0; j < two.m_columns; j++)
